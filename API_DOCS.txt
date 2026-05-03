@@ -1,0 +1,378 @@
+# Room Allocation System — API Reference & Postman Samples
+# Base URL: http://localhost:5000/api
+
+# ══════════════════════════════════════════════════════════════
+# 1. HEALTH CHECK
+# ══════════════════════════════════════════════════════════════
+
+GET http://localhost:5000/api/health
+
+RESPONSE (200):
+{
+  "success": true,
+  "message": "Room Allocation API is running.",
+  "timestamp": "2025-06-01T10:00:00.000Z"
+}
+
+# ══════════════════════════════════════════════════════════════
+# 2. AUTHENTICATION
+# ══════════════════════════════════════════════════════════════
+
+## 2A. Register
+POST http://localhost:5000/api/auth/register
+Content-Type: application/json
+
+BODY:
+{
+  "full_name": "John Doe",
+  "email":     "john@thapar.edu",
+  "password":  "password123",
+  "role":      "Requester",
+  "dept_id":   1
+}
+
+RESPONSE (201):
+{
+  "success": true,
+  "message": "User registered successfully.",
+  "user_id": 6
+}
+
+## 2B. Login
+POST http://localhost:5000/api/auth/login
+Content-Type: application/json
+
+BODY (Admin):
+{
+  "email":    "admin@thapar.edu",
+  "password": "password123"
+}
+
+BODY (Staff):
+{
+  "email":    "staff@thapar.edu",
+  "password": "password123"
+}
+
+BODY (Requester):
+{
+  "email":    "aryan@thapar.edu",
+  "password": "password123"
+}
+
+RESPONSE (200):
+{
+  "success": true,
+  "message": "Login successful.",
+  "token":   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+  "user": {
+    "user_id":   1,
+    "full_name": "Admin User",
+    "email":     "admin@thapar.edu",
+    "role":      "Admin",
+    "dept_id":   5,
+    "dept_name": "Administration"
+  }
+}
+
+## 2C. Get Current User
+GET http://localhost:5000/api/auth/me
+Authorization: Bearer <TOKEN>
+
+RESPONSE (200):
+{
+  "success": true,
+  "user": {
+    "user_id": 1, "full_name": "Admin User",
+    "email": "admin@thapar.edu", "role": "Admin",
+    "dept_name": "Administration", "created_at": "2025-06-01T..."
+  }
+}
+
+# ══════════════════════════════════════════════════════════════
+# 3. ROOMS
+# ══════════════════════════════════════════════════════════════
+
+## 3A. Get All Rooms
+GET http://localhost:5000/api/rooms
+Authorization: Bearer <TOKEN>
+
+QUERY PARAMS (optional):
+  type=Lab
+  building=CSE
+
+RESPONSE (200):
+{
+  "success": true,
+  "data": [
+    {
+      "room_id": 1, "room_code": "CS-101",
+      "building": "CSE Block", "capacity": 60, "room_type": "Classroom"
+    },
+    ...
+  ]
+}
+
+## 3B. Get Time Slots
+GET http://localhost:5000/api/rooms/slots
+Authorization: Bearer <TOKEN>
+
+RESPONSE (200):
+{
+  "success": true,
+  "data": [
+    { "slot_id": 1, "label": "Slot 1 (8:00–9:00)", "start_time": "08:00:00", "end_time": "09:00:00" },
+    ...
+  ]
+}
+
+## 3C. Check Availability
+GET http://localhost:5000/api/rooms/availability?room_id=1&date=2025-06-10&slot_id=3
+Authorization: Bearer <TOKEN>
+
+RESPONSE (Available):
+{
+  "success":      true,
+  "room_id":      1,
+  "date":         "2025-06-10",
+  "slot_id":      3,
+  "is_available": true,
+  "conflict":     null
+}
+
+RESPONSE (Occupied):
+{
+  "success":      true,
+  "is_available": false,
+  "conflict": {
+    "allocation_id": 1,
+    "event_title":   "Data Structures Lecture",
+    "slot_label":    "Slot 1 (8:00–9:00)",
+    "organizer":     "Staff Member"
+  }
+}
+
+## 3D. Get Day Schedule (Full Grid)
+GET http://localhost:5000/api/rooms/schedule?date=2025-06-10
+Authorization: Bearer <TOKEN>
+
+RESPONSE (200):
+{
+  "success": true,
+  "date": "2025-06-10",
+  "data": [
+    {
+      "room_id": 1, "room_code": "CS-101", "building": "CSE Block",
+      "slot_id": 1, "slot_label": "Slot 1 (8:00–9:00)",
+      "availability": "Occupied",
+      "event_title": "Data Structures Lecture",
+      "organizer": "Staff Member"
+    },
+    {
+      "room_id": 1, "room_code": "CS-101",
+      "slot_id": 2, "availability": "Free",
+      "event_title": null, "organizer": null
+    },
+    ...
+  ]
+}
+
+## 3E. Add Room (Admin only)
+POST http://localhost:5000/api/rooms
+Authorization: Bearer <ADMIN_TOKEN>
+Content-Type: application/json
+
+BODY:
+{
+  "room_code":  "CS-103",
+  "building":   "CSE Block",
+  "capacity":   60,
+  "room_type":  "Classroom"
+}
+
+RESPONSE (201):
+{ "success": true, "message": "Room added.", "room_id": 11 }
+
+# ══════════════════════════════════════════════════════════════
+# 4. REQUESTS
+# ══════════════════════════════════════════════════════════════
+
+## 4A. Submit Room Request
+POST http://localhost:5000/api/requests
+Authorization: Bearer <REQUESTER_TOKEN>
+Content-Type: application/json
+
+BODY:
+{
+  "event_title":  "IEEE Workshop on Machine Learning",
+  "event_type":   "Workshop",
+  "dept_id":      1,
+  "room_id":      5,
+  "request_date": "2025-06-15",
+  "slot_id":      6
+}
+
+RESPONSE SUCCESS (201):
+{
+  "success":    true,
+  "message":    "Request submitted successfully.",
+  "request_id": 3
+}
+
+RESPONSE CONFLICT (409):
+{
+  "success": false,
+  "message": "Room is already booked for the selected date and slot."
+}
+
+## 4B. Get My Requests
+GET http://localhost:5000/api/requests/mine
+Authorization: Bearer <REQUESTER_TOKEN>
+
+RESPONSE (200):
+{
+  "success": true,
+  "data": [
+    {
+      "request_id":   3,
+      "event_title":  "IEEE Workshop on Machine Learning",
+      "event_type":   "Workshop",
+      "room_code":    "SH-101",
+      "building":     "Main Block",
+      "slot_label":   "Slot 6 (13:00–14:00)",
+      "request_date": "2025-06-15",
+      "status":       "Pending",
+      "decided_by_name": null,
+      "remarks":      null,
+      "created_at":   "2025-06-01T10:00:00.000Z"
+    }
+  ]
+}
+
+## 4C. Get All Requests (Admin/Staff)
+GET http://localhost:5000/api/requests
+Authorization: Bearer <ADMIN_TOKEN>
+
+QUERY PARAMS (optional):
+  status=Pending   (Pending | Approved | Rejected)
+
+## 4D. Approve / Reject Request
+PATCH http://localhost:5000/api/requests/3/decide
+Authorization: Bearer <ADMIN_TOKEN>
+Content-Type: application/json
+
+BODY (Approve):
+{
+  "decision": "Approved",
+  "remarks":  "Approved for IEEE workshop. Please ensure the hall is cleaned after use."
+}
+
+BODY (Reject):
+{
+  "decision": "Rejected",
+  "remarks":  "Hall is reserved for university function on this date."
+}
+
+RESPONSE SUCCESS (200):
+{ "success": true, "message": "Request Approved successfully." }
+
+RESPONSE (already decided):
+{ "success": false, "message": "Request has already been decided." }
+
+## 4E. Get Approval Logs
+GET http://localhost:5000/api/requests/logs
+Authorization: Bearer <ADMIN_TOKEN>
+
+QUERY PARAMS (optional):
+  request_id=3
+
+RESPONSE (200):
+{
+  "success": true,
+  "data": [
+    {
+      "log_id": 2,
+      "request_id": 3,
+      "action": "Approved",
+      "action_by_name": "Admin User",
+      "action_by_role": "Admin",
+      "comments": "Approved for IEEE workshop.",
+      "action_time": "2025-06-01T10:05:00.000Z"
+    },
+    {
+      "log_id": 1,
+      "action": "Submitted",
+      "action_by_name": "Aryan Gupta",
+      "action_by_role": "Requester",
+      "comments": "Room request created.",
+      "action_time": "2025-06-01T10:00:00.000Z"
+    }
+  ]
+}
+
+# ══════════════════════════════════════════════════════════════
+# 5. ADMIN
+# ══════════════════════════════════════════════════════════════
+
+## 5A. Dashboard Stats
+GET http://localhost:5000/api/admin/dashboard
+Authorization: Bearer <ADMIN_TOKEN>
+
+RESPONSE (200):
+{
+  "success": true,
+  "stats": {
+    "total_rooms": 10, "total_users": 5,
+    "pending": 2, "approved": 1, "rejected": 0, "active_allocs": 3
+  },
+  "today_schedule": [...],
+  "recent_requests": [...]
+}
+
+## 5B. All Users (Admin only)
+GET http://localhost:5000/api/admin/users
+Authorization: Bearer <ADMIN_TOKEN>
+
+## 5C. Departments
+GET http://localhost:5000/api/admin/departments
+Authorization: Bearer <TOKEN>
+
+## 5D. Utilisation Report
+GET http://localhost:5000/api/admin/utilisation
+Authorization: Bearer <ADMIN_TOKEN>
+
+RESPONSE (200):
+{
+  "success": true,
+  "data": [
+    {
+      "room_code": "SH-101", "building": "Main Block",
+      "room_type": "Seminar Hall", "capacity": 200,
+      "total_bookings": 5, "bookings_last_30_days": 3
+    }
+  ]
+}
+
+# ══════════════════════════════════════════════════════════════
+# 6. ERROR RESPONSES
+# ══════════════════════════════════════════════════════════════
+
+401 Unauthorized:
+{ "success": false, "message": "Access denied. No token provided." }
+
+403 Forbidden:
+{ "success": false, "message": "Access denied. Required role(s): Admin, Staff." }
+
+404 Not Found:
+{ "success": false, "message": "Route GET /api/unknown not found." }
+
+409 Conflict (Double Booking via DB Trigger):
+{ "success": false, "message": "CONFLICT: Room is already allocated for this date and time slot." }
+
+422 Validation Error:
+{
+  "success": false,
+  "errors": [
+    { "msg": "Valid email is required.", "path": "email" }
+  ]
+}

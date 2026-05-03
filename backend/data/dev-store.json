@@ -1,0 +1,331 @@
+{
+  "meta": {
+    "driver": "file",
+    "initialized_at": "2026-04-21T07:56:28.167Z",
+    "updated_at": "2026-04-21T07:56:28.167Z"
+  },
+  "counters": {
+    "department": 5,
+    "room": 10,
+    "time_slot": 9,
+    "user": 5,
+    "event": 5,
+    "request": 2,
+    "allocation": 3,
+    "log": 2
+  },
+  "departments": [
+    {
+      "dept_id": 1,
+      "dept_name": "Computer Science & Engineering"
+    },
+    {
+      "dept_id": 2,
+      "dept_name": "Electronics & Communication Engineering"
+    },
+    {
+      "dept_id": 3,
+      "dept_name": "Mechanical Engineering"
+    },
+    {
+      "dept_id": 4,
+      "dept_name": "Civil Engineering"
+    },
+    {
+      "dept_id": 5,
+      "dept_name": "Administration"
+    }
+  ],
+  "rooms": [
+    {
+      "room_id": 1,
+      "room_code": "CS-101",
+      "building": "CSE Block",
+      "capacity": 60,
+      "room_type": "Classroom"
+    },
+    {
+      "room_id": 2,
+      "room_code": "CS-102",
+      "building": "CSE Block",
+      "capacity": 60,
+      "room_type": "Classroom"
+    },
+    {
+      "room_id": 3,
+      "room_code": "CS-LAB-1",
+      "building": "CSE Block",
+      "capacity": 30,
+      "room_type": "Lab"
+    },
+    {
+      "room_id": 4,
+      "room_code": "CS-LAB-2",
+      "building": "CSE Block",
+      "capacity": 30,
+      "room_type": "Lab"
+    },
+    {
+      "room_id": 5,
+      "room_code": "SH-101",
+      "building": "Main Block",
+      "capacity": 200,
+      "room_type": "Seminar Hall"
+    },
+    {
+      "room_id": 6,
+      "room_code": "AUD-01",
+      "building": "Central Block",
+      "capacity": 500,
+      "room_type": "Auditorium"
+    },
+    {
+      "room_id": 7,
+      "room_code": "EC-101",
+      "building": "ECE Block",
+      "capacity": 60,
+      "room_type": "Classroom"
+    },
+    {
+      "room_id": 8,
+      "room_code": "ME-101",
+      "building": "ME Block",
+      "capacity": 60,
+      "room_type": "Classroom"
+    },
+    {
+      "room_id": 9,
+      "room_code": "CONF-01",
+      "building": "Admin Block",
+      "capacity": 20,
+      "room_type": "Conference Room"
+    },
+    {
+      "room_id": 10,
+      "room_code": "LIB-SEM",
+      "building": "Library Block",
+      "capacity": 80,
+      "room_type": "Seminar Hall"
+    }
+  ],
+  "timeSlots": [
+    {
+      "slot_id": 1,
+      "label": "Slot 1 (8:00-9:00)",
+      "start_time": "08:00:00",
+      "end_time": "09:00:00"
+    },
+    {
+      "slot_id": 2,
+      "label": "Slot 2 (9:00-10:00)",
+      "start_time": "09:00:00",
+      "end_time": "10:00:00"
+    },
+    {
+      "slot_id": 3,
+      "label": "Slot 3 (10:00-11:00)",
+      "start_time": "10:00:00",
+      "end_time": "11:00:00"
+    },
+    {
+      "slot_id": 4,
+      "label": "Slot 4 (11:00-12:00)",
+      "start_time": "11:00:00",
+      "end_time": "12:00:00"
+    },
+    {
+      "slot_id": 5,
+      "label": "Slot 5 (12:00-13:00)",
+      "start_time": "12:00:00",
+      "end_time": "13:00:00"
+    },
+    {
+      "slot_id": 6,
+      "label": "Slot 6 (13:00-14:00)",
+      "start_time": "13:00:00",
+      "end_time": "14:00:00"
+    },
+    {
+      "slot_id": 7,
+      "label": "Slot 7 (14:00-15:00)",
+      "start_time": "14:00:00",
+      "end_time": "15:00:00"
+    },
+    {
+      "slot_id": 8,
+      "label": "Slot 8 (15:00-16:00)",
+      "start_time": "15:00:00",
+      "end_time": "16:00:00"
+    },
+    {
+      "slot_id": 9,
+      "label": "Slot 9 (16:00-17:00)",
+      "start_time": "16:00:00",
+      "end_time": "17:00:00"
+    }
+  ],
+  "users": [
+    {
+      "user_id": 1,
+      "full_name": "Admin User",
+      "email": "admin@thapar.edu",
+      "password_hash": "$2a$10$hF5eqwuc2S9NDAD0.vvF1uEvqlW1lH2FRd3yCeyUuV62D2nDiEb0q",
+      "role": "Admin",
+      "dept_id": 5,
+      "created_at": "2026-04-11T07:56:28.167Z"
+    },
+    {
+      "user_id": 2,
+      "full_name": "Staff Member",
+      "email": "staff@thapar.edu",
+      "password_hash": "$2a$10$hF5eqwuc2S9NDAD0.vvF1uEvqlW1lH2FRd3yCeyUuV62D2nDiEb0q",
+      "role": "Staff",
+      "dept_id": 1,
+      "created_at": "2026-04-11T17:56:28.167Z"
+    },
+    {
+      "user_id": 3,
+      "full_name": "Abhilakshya Puri",
+      "email": "abhilakshya@thapar.edu",
+      "password_hash": "$2a$10$hF5eqwuc2S9NDAD0.vvF1uEvqlW1lH2FRd3yCeyUuV62D2nDiEb0q",
+      "role": "Requester",
+      "dept_id": 1,
+      "created_at": "2026-04-12T03:56:28.167Z"
+    },
+    {
+      "user_id": 4,
+      "full_name": "Aryan Gupta",
+      "email": "aryan@thapar.edu",
+      "password_hash": "$2a$10$hF5eqwuc2S9NDAD0.vvF1uEvqlW1lH2FRd3yCeyUuV62D2nDiEb0q",
+      "role": "Requester",
+      "dept_id": 1,
+      "created_at": "2026-04-12T13:56:28.167Z"
+    },
+    {
+      "user_id": 5,
+      "full_name": "Academic Coordinator",
+      "email": "coordinator@thapar.edu",
+      "password_hash": "$2a$10$hF5eqwuc2S9NDAD0.vvF1uEvqlW1lH2FRd3yCeyUuV62D2nDiEb0q",
+      "role": "Staff",
+      "dept_id": 2,
+      "created_at": "2026-04-12T23:56:28.167Z"
+    }
+  ],
+  "events": [
+    {
+      "event_id": 1,
+      "event_title": "Data Structures Lecture",
+      "event_type": "Class",
+      "organizer_id": 2,
+      "dept_id": 1,
+      "created_at": "2026-04-18T07:56:28.167Z"
+    },
+    {
+      "event_id": 2,
+      "event_title": "DBMS Lab Session",
+      "event_type": "Class",
+      "organizer_id": 2,
+      "dept_id": 1,
+      "created_at": "2026-04-18T09:56:28.167Z"
+    },
+    {
+      "event_id": 3,
+      "event_title": "Algorithms Mid-Semester Exam",
+      "event_type": "Exam",
+      "organizer_id": 2,
+      "dept_id": 1,
+      "created_at": "2026-04-18T11:56:28.167Z"
+    },
+    {
+      "event_id": 4,
+      "event_title": "IEEE Tech Fest Planning Meet",
+      "event_type": "Society Event",
+      "organizer_id": 3,
+      "dept_id": 1,
+      "created_at": "2026-04-18T13:56:28.167Z"
+    },
+    {
+      "event_id": 5,
+      "event_title": "Python Workshop for Freshers",
+      "event_type": "Workshop",
+      "organizer_id": 4,
+      "dept_id": 1,
+      "created_at": "2026-04-18T15:56:28.167Z"
+    }
+  ],
+  "allocations": [
+    {
+      "allocation_id": 1,
+      "room_id": 1,
+      "event_id": 1,
+      "alloc_date": "2026-04-21",
+      "slot_id": 1,
+      "status": "Active",
+      "created_at": "2026-04-18T19:56:28.167Z"
+    },
+    {
+      "allocation_id": 2,
+      "room_id": 3,
+      "event_id": 2,
+      "alloc_date": "2026-04-21",
+      "slot_id": 3,
+      "status": "Active",
+      "created_at": "2026-04-18T21:56:28.167Z"
+    },
+    {
+      "allocation_id": 3,
+      "room_id": 5,
+      "event_id": 3,
+      "alloc_date": "2026-04-24",
+      "slot_id": 4,
+      "status": "Active",
+      "created_at": "2026-04-18T23:56:28.167Z"
+    }
+  ],
+  "requests": [
+    {
+      "request_id": 1,
+      "requester_id": 3,
+      "event_id": 4,
+      "room_id": 5,
+      "request_date": "2026-04-26",
+      "slot_id": 7,
+      "status": "Pending",
+      "decided_by": null,
+      "remarks": "",
+      "created_at": "2026-04-20T23:56:28.167Z",
+      "updated_at": "2026-04-20T23:56:28.167Z"
+    },
+    {
+      "request_id": 2,
+      "requester_id": 4,
+      "event_id": 5,
+      "room_id": 1,
+      "request_date": "2026-04-23",
+      "slot_id": 5,
+      "status": "Pending",
+      "decided_by": null,
+      "remarks": "",
+      "created_at": "2026-04-21T04:56:28.167Z",
+      "updated_at": "2026-04-21T04:56:28.167Z"
+    }
+  ],
+  "approvalLogs": [
+    {
+      "log_id": 1,
+      "request_id": 1,
+      "action": "Submitted",
+      "action_by": 3,
+      "action_time": "2026-04-20T23:56:28.167Z",
+      "comments": "Room request created."
+    },
+    {
+      "log_id": 2,
+      "request_id": 2,
+      "action": "Submitted",
+      "action_by": 4,
+      "action_time": "2026-04-21T04:56:28.167Z",
+      "comments": "Room request created."
+    }
+  ]
+}
